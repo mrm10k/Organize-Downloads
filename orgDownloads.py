@@ -1,8 +1,8 @@
 import os
 import shutil
+from tkinter import Tk, filedialog
 
 def org_downloads(download_dir):
-
     categories = {
         "Compressed": [".zip", ".7z", ".rar", ".tar", ".gz"],
         "PDFs": [".pdf"],
@@ -65,12 +65,19 @@ def org_downloads(download_dir):
 
     print("Done!")
 
-download_folder = input("Introduce the downloads path (Ex: D:\Downloads): ").strip()
+# Configuración de la interfaz gráfica para seleccionar la carpeta
+def select_download_folder():
+    root = Tk()
+    root.withdraw()  # Oculta la ventana principal de Tkinter
+    folder_selected = filedialog.askdirectory(title="Select your Downloads folder")
+    return folder_selected
 
-if os.path.exists(download_folder) and os.path.isdir(download_folder):
+download_folder = select_download_folder()
+
+if download_folder and os.path.exists(download_folder) and os.path.isdir(download_folder):
     org_downloads(download_folder)
 else:
-    print("The path introduced isn't a valid path or do not exists")
+    print("No valid folder selected or folder does not exist.")
 
 #                O  o
 #           _\_   o
